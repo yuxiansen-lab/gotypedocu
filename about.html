@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目介绍 - 文档</title>
+    <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-blue">
+
+    <header class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-white">
+            <span class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: '#main-drawer'}"><i class="mdui-icon material-icons">menu</i></span>
+            <span class="mdui-typo-headline mdui-hidden-xs">加载中...</span>
+            <span class="mdui-typo-title">Markdown 渲染</span>
+            <div class="mdui-toolbar-spacer"></div>
+            <a id="github-link" href="#" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon material-icons">code</i></a>
+        </div>
+    </header>
+
+    <div class="mdui-drawer" id="main-drawer">
+        <div class="mdui-list"></div>
+    </div>
+
+    <main class="mdui-container" id="main-content">
+        <div id="content-target" class="doc-card mdui-typo">
+            正在解析 Markdown...
+        </div>
+
+        <script id="markdown-content" type="text/markdown">
+# 项目介绍
+
+这是通过 **Marked.js** 自动生成的页面。
+
+    ``
+        </script>
+    </main>
+
+    <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+    <script src="config.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawMarkdown = document.getElementById('markdown-content').innerHTML;
+            // 解决 HTML 实体转义问题
+            const decodedMarkdown = rawMarkdown.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+            document.getElementById('content-target').innerHTML = marked.parse(decodedMarkdown);
+        });
+    </script>
+</body>
+</html>
