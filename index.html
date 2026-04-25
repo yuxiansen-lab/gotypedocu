@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>快速入门</title>
+    <title>Markdown 模式 - 文档</title>
     <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css"/>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-blue">
 
@@ -13,26 +14,51 @@
         <div class="mdui-toolbar mdui-color-white">
             <span class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: '#main-drawer'}"><i class="mdui-icon material-icons">menu</i></span>
             <span class="mdui-typo-headline mdui-hidden-xs">加载中...</span>
-            <span class="mdui-typo-title">快速入门</span>
+            <span class="mdui-typo-title">Markdown 渲染</span>
             <div class="mdui-toolbar-spacer"></div>
             <a id="github-link" href="#" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon material-icons">code</i></a>
         </div>
     </header>
 
     <div class="mdui-drawer" id="main-drawer">
-        <div class="mdui-list">
-            </div>
+        <div class="mdui-list"></div>
     </div>
 
     <main class="mdui-container" id="main-content">
-        <div class="doc-card mdui-typo">
-            <h1>快速入门</h1>
-            <p>这是首页内容。你可以按照这个模板创建 <code>about.html</code> 等其他页面。</p>
-            <pre><code>npm install mdui-docs</code></pre>
+        <div id="content-target" class="doc-card mdui-typo">
+            正在解析 Markdown...
         </div>
+
+        <script id="markdown-content" type="text/markdown">
+# 快速入门 (方案 B)
+
+这是通过 **Marked.js** 自动生成的页面。
+
+### 为什么选方案 B？
+* **书写快**：不用打 `<p>`、`<div>`。
+* **易维护**：内容结构一目了然。
+* **支持代码高亮**：
+    ```javascript
+    console.log("Hello Google Style!");
+    ```
+
+### 任务列表
+- [x] 引入 Marked.js
+- [x] 配置自动解析脚本
+- [ ] 开始写你的文档
+        </script>
     </main>
 
     <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
     <script src="config.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const rawMarkdown = document.getElementById('markdown-content').innerHTML;
+            // 解决 HTML 实体转义问题
+            const decodedMarkdown = rawMarkdown.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+            document.getElementById('content-target').innerHTML = marked.parse(decodedMarkdown);
+        });
+    </script>
 </body>
 </html>
