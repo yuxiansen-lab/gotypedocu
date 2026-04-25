@@ -3,10 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown 模式 - 文档</title>
+    <title>加载中... - 文档</title>
     <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        /* 页面内目录 (TOC) 样式 */
+        .toc-container { position: sticky; top: 80px; padding-left: 20px; border-left: 1px solid #dadce0; margin-top: 40px; }
+        .toc-item { display: block; padding: 4px 0; color: #5f6368; text-decoration: none; font-size: 13px; }
+        .toc-item:hover { color: #1a73e8; }
+        /* 代码复制按钮 */
+        .code-wrapper { position: relative; }
+        .copy-btn { position: absolute; top: 8px; right: 8px; opacity: 0; transition: opacity .3s; background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+        .code-wrapper:hover .copy-btn { opacity: 1; }
+    </style>
 </head>
 <body class="mdui-appbar-with-toolbar mdui-drawer-body-left mdui-theme-primary-blue">
 
@@ -14,8 +24,11 @@
         <div class="mdui-toolbar mdui-color-white">
             <span class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: '#main-drawer'}"><i class="mdui-icon material-icons">menu</i></span>
             <span class="mdui-typo-headline mdui-hidden-xs">加载中...</span>
-            <span class="mdui-typo-title">Markdown 渲染</span>
             <div class="mdui-toolbar-spacer"></div>
+            <div class="mdui-textfield mdui-textfield-expandable">
+                <button class="mdui-textfield-icon mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></button>
+                <input id="doc-search" class="mdui-textfield-input" type="text" placeholder="搜索页面标题..."/>
+            </div>
             <a id="github-link" href="#" class="mdui-btn mdui-btn-icon mdui-ripple"><i class="mdui-icon material-icons">code</i></a>
         </div>
     </header>
@@ -24,41 +37,36 @@
         <div class="mdui-list"></div>
     </div>
 
-    <main class="mdui-container" id="main-content">
-        <div id="content-target" class="doc-card mdui-typo">
-            正在解析 Markdown...
+    <main class="mdui-container-fluid" id="main-content">
+        <div class="mdui-row">
+            <div class="mdui-col-md-8 mdui-col-offset-md-1">
+                <div id="content-target" class="doc-card mdui-typo">正在加载内容...</div>
+                
+                <footer class="mdui-m-t-5 mdui-p-y-3 mdui-text-center" style="color: #5f6368; border-top: 1px solid #dadce0;">
+                    <p>© 2026 文档中心 | Powered by Gemini</p>
+                </footer>
+            </div>
+
+            <div class="mdui-col-md-2 mdui-hidden-sm-down">
+                <div class="toc-container" id="toc-target">
+                    <p style="font-weight: 500; font-size: 12px; color: #5f6368; text-transform: uppercase;">本页目录</p>
+                </div>
+            </div>
         </div>
 
         <script id="markdown-content" type="text/markdown">
-# 快速入门 (方案 B)
+# 快速入门指南
 
-这是通过 **Marked.js** 自动生成的页面。
+欢迎使用本系统！这是一个全功能集成的 Google 风格文档。
 
-### 为什么选方案 B？
-* **书写快**：不用打 `<p>`、`<div>`。
-* **易维护**：内容结构一目了然。
-* **支持代码高亮**：
-    ```javascript
-    console.log("Hello Google Style!");
-    ```
+## 核心特性
+- **Markdown 驱动**：直接书写，自动渲染。
+- **代码高亮**：支持多种编程语言。
+- **一键复制**：鼠标悬停在代码块上即可看到复制按钮。
 
-### 任务列表
-- [x] 引入 Marked.js
-- [x] 配置自动解析脚本
-- [ ] 开始写你的文档
-        </script>
-    </main>
-
-    <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
-    <script src="config.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const rawMarkdown = document.getElementById('markdown-content').innerHTML;
-            // 解决 HTML 实体转义问题
-            const decodedMarkdown = rawMarkdown.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-            document.getElementById('content-target').innerHTML = marked.parse(decodedMarkdown);
-        });
-    </script>
-</body>
-</html>
+## 示例代码
+```javascript
+// 点击右上角尝试复制
+function welcome() {
+    console.log("Hello, World!");
+}
